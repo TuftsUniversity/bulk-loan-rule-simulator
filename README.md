@@ -16,8 +16,11 @@
   - input/Item Policies and Locations
   - input/User Groups 
 
+## Set Up
+- change the secrets_local_example.py file to have real API keys etc, and change its name to secrets_local.py
 ## Operation
 
 - This may take a while to run, so you can run the headless version of this
 - `python3 drillFulfillmentConfigurationUtility-Headless.py`
+- note at this point if you are changing from sandbox to prod you'll have to hardcode the changes to the call to the secrets file
   
