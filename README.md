@@ -12,6 +12,9 @@
     - should have these columns
       - User Group
       - Primary Identifier
+- put these in the following following folders
+  - input/Item Policies and Locations
+  - input/User Groups 
 
 ## Operation
 
