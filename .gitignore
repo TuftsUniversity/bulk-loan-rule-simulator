@@ -1,4 +1,5 @@
 secrets_local.py
 Processing/*.xlsx
 Holding Area
-input/
+input/User Groups/*.xlsx
+input/Item Policies and Locations/*.xlsx
