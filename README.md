@@ -22,5 +22,6 @@
 
 - This may take a while to run, so you can run the headless version of this
 - `python3 drillFulfillmentConfigurationUtility-Headless.py`
+- you can also run the non headless version, but you have to surrender your computer to run this for however long it takes
 - note at this point if you are changing from sandbox to prod you'll have to hardcode the changes to the call to the secrets file
   
