@@ -66,7 +66,7 @@ service = Service(ChromeDriverManager().install())  # Use ChromeDriverManager fo
 
 # Initialize the WebDriver
 driver = webdriver.Chrome(service=service, options=chrome_options)
-driver.get(secrets_local.alma_base_url_sandbox)
+driver.get(secrets_local.alma_base_url)
 
 # Login to Alma
 username = secrets_local.username
@@ -160,7 +160,7 @@ for _, row in user_group_data.iterrows():
     print(user_id)
 
 
-    print(secrets_local.alma_sandbox_user_url + "/" + str(user_id) + "?" + secrets_local.alma_sandbox_user_apikey + "&format=json")
+    print(secrets_local.alma_sandbox_user_url + "/" + str(user_id) + "?api-key" + secrets_local.alma_sandbox_user_apikey + "&format=json")
 
     user_record = requests.get(secrets_local.alma_sandbox_user_url + "/" + str(user_id) + "?apikey=" + secrets_local.alma_sandbox_user_apikey + "&format=json").json()
 
@@ -188,8 +188,10 @@ for _, row in user_group_data.iterrows():
     time.sleep(5)
     # Locate the <a> tag within the <li> element
     search_index_button.click()
+    time.sleep(2)
     primary_identifier_link = driver.find_element(By.XPATH, "//li[@id='TOP_NAV_Search_index_HFrUser.user_name']//a[text()='Primary identifier']")
-    #
+
+    time.sleep(2)
     # # Click the link
     primary_identifier_link.click()
 
@@ -207,7 +209,7 @@ for _, row in user_group_data.iterrows():
 
     time.sleep(2)
 
-    row = WebDriverWait(driver, 10).until(
+    row = WebDriverWait(driver, 20).until(
         ec.visibility_of_element_located((By.XPATH, "//table[@id='TABLE_DATA_userList']/tbody/tr"))
     )
 
@@ -295,7 +297,7 @@ for _, row in user_group_data.iterrows():
                 loan_tab = driver.find_element(By.ID, 'A_NAV_LINK_touTypeloan_span')
                 loan_tab.click()
                 time.sleep(2)
-                time.sleep(2)
+
                 fulfillment_rule = driver.find_element(By.XPATH, "//div[@class='row ' and .//span[contains(text(), 'Fulfillment Unit Rule')]]//a").text
 
 
@@ -327,6 +329,7 @@ for _, row in user_group_data.iterrows():
         retry_count = 3  # Number of retries
         for attempt in range(retry_count):
             try:
+                time.sleep(2)
                 # Re-find the "Request" tab element each time
                 request_tab = driver.find_element(By.ID, 'A_NAV_LINK_touTyperequest_span')
                 request_tab.click()
