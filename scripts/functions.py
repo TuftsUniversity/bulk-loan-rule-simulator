@@ -7,6 +7,7 @@ import pandas as pd
 import os
 import time
 from openpyxl import load_workbook
+import sys
 
 def login(driver, username, password):
     """Login to Alma"""
@@ -23,7 +24,7 @@ def safe_find_element(driver, by, value, retries=3):
     """Find element with retries, and refresh the page if retries fail."""
     for attempt in range(retries):
         try:
-            return WebDriverWait(driver, 10).until(EC.visibility_of_element_located((by, value)))
+            return WebDriverWait(driver, 15).until(EC.visibility_of_element_located((by, value)))
         except StaleElementReferenceException:
             print(f"Retry {attempt + 1} of {retries}: Element stale, retrying...")
             time.sleep(2)
@@ -54,10 +55,10 @@ def click_element_with_retry(driver, by, value, retries=3, wait_time=10):
     for attempt in range(retries):
         try:
             # Wait for element to be present
-            element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((by, value)))
+            element = WebDriverWait(driver, 15).until(EC.presence_of_element_located((by, value)))
 
             # Wait until element is clickable
-            element = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
+            element = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((by, value)))
              # Click the element
             element.click()
             return
@@ -81,12 +82,180 @@ def click_element_with_retry(driver, by, value, retries=3, wait_time=10):
                 driver.refresh()  # Refresh the page on final attempt
                 time.sleep(5)
                 print(f"Failed to locate element: {value} after {retries} retries.")
+
+        except:
+
+            return None  # Return None instead of throwing an exception
+def get_table_html_with_retry(driver, by, value, table, retries=3):
+
+
+
+    # --- Extract Loan Policy Data ---
+        # loan_tab = safe_find_element(driver, By.ID, "A_NAV_LINK_touTypeloan_span")
+
+
+        
+        
+
+        # # Extract policy table
+        # loan_policy_table_html = get_table_html_with_retry(
+        #     driver, By.ID, "TABLE_DATA_policiesList"
+        # )
+
+        # loan_policy_df = pd.read_html(loan_policy_table_html)[0]
+    """Retries getting table HTML to handle stale element issues."""
+    for attempt in range(retries):
+        # try:
+        if table == "loan":
+            #print("got into table == loan")
+            click_element_with_retry(driver, By.ID, "A_NAV_LINK_touTypeloan_span")
+            try:
+                WebDriverWait(driver, 15).until(
+                    lambda d: "Is Loanable" in d.find_element(by, value).get_attribute("outerHTML")
+                )
+                #("Request tab content loaded.")
+            except TimeoutException:
+                print("⚠️ Timeout waiting for 'Is Requestable' content in request tab")
+                raise
+            #fulfillment_unit_name = safe_find_element_text(driver, By.XPATH, "//div[contains(@class, 'row ') and .//span[contains(text(), 'Fulfillment Unit Name')]]//a")
+
+            table_element = get_html(driver, by, value) # WebDriverWait(driver, 10).until(EC.presence_of_element_located((by, value)))
+                # If it's a string of HTML, parse it
+            
+            policy_df = get_dataframe(table_element)
+
+            policy_df = policy_df[['Policy Type', 'Policy Description']]
+            policy_df = policy_df.set_index('Policy Type').T
+            policy_series = policy_df.squeeze(axis=0)
+
+            policy_dict = policy_series.to_dict()
+
+            #print("Parsed DataFrame:")
+            #print(policy_df)
+
+            # Check for required columns
+            # if "Is Loanable" not in policy_df["Policy Type"].values:
+            #     raise Exception
+        
+            #else:
+            tou_name = safe_find_element_text(
+            driver,
+            By.XPATH,
+            "//div[contains(@class, 'row ') and .//span[contains(text(), 'Terms Of Use Name')]]//a",
+            )
+
+            fulfillment_rule_name = safe_find_element_text(
+            driver,
+            By.XPATH,
+            "//div[contains(@class, 'row ') and .//span[contains(text(), 'Fulfillment Unit Rule')]]//a",
+            )
+
+            fulfillment_unit_name = safe_find_element_text(driver, By.XPATH, "//div[contains(@class, 'row ') and .//span[contains(text(), 'Fulfillment Unit Name')]]//a")
+
+            return [fulfillment_rule_name, tou_name, policy_dict, fulfillment_unit_name]
+    
+        elif table == "request":
+            #print("got into table == request")
+            click_element_with_retry(driver, By.ID, "A_NAV_LINK_touTyperequest_span")
+            try:
+                WebDriverWait(driver, 10).until(
+                    lambda d: "Is Requestable" in d.find_element(by, value).get_attribute("outerHTML")
+                )
+                #print("Request tab content loaded.")
+            except TimeoutException:
+                print("⚠️ Timeout waiting for 'Is Requestable' content in request tab")
+                raise
+
+            table_element = get_html(driver, by, value) # WebDriverWait(driver, 10).until(EC.presence_of_element_located((by, value)))
+            # If it's a string of HTML, parse it
+            # if isinstance(table_element, str):
+            #     try:
+            #         dfs = pd.read_html(table_element)
+            #         if dfs:
+            #             policy_df = dfs[0]
+            #         else:
+            #             raise ValueError("No tables found in HTML.")
+            #     except Exception as e:
+            #         raise RuntimeError(f"Failed to parse HTML table: {e}")
+            # elif isinstance(table_element, pd.DataFrame):
+            #     policy_df = table_element
+            # else:
+            #     raise TypeError(f"Unexpected input type for table_element: {type(table_element)}")
+
+            # policy_df = policy_df.fillna("")
+
+            #print("Parsed DataFrame:")
+            
+
+            policy_df = get_dataframe(table_element)
+
+            policy_df = policy_df[['Policy Type', 'Policy Description']]
+            policy_df = policy_df.set_index('Policy Type').T
+            policy_series = policy_df.squeeze(axis=0)
+
+            policy_dict = policy_series.to_dict()
+
+
+            # Check for required columns
+            # if "Is Requestable" not in policy_df["Policy Type"].values:
+            #     raise Exception
+            #else:
+            tou_name = safe_find_element_text(
+            driver,
+            By.XPATH,
+            "//div[contains(@class, 'row ') and .//span[contains(text(), 'Terms Of Use Name')]]//a",
+            )
+
+            fulfillment_rule_name = safe_find_element_text(
+            driver,
+            By.XPATH,
+            "//div[contains(@class, 'row ') and .//span[contains(text(), 'Fulfillment Unit Rule')]]//a",
+            )
+
+            fulfillment_unit_name = safe_find_element_text(driver, By.XPATH, "//div[contains(@class, 'row ') and .//span[contains(text(), 'Fulfillment Unit Name')]]//a")
+
+            return [fulfillment_rule_name, tou_name, policy_dict, fulfillment_unit_name]
+    
+
+        else:
+            print("got into Exception.    did not find loan nav link")
+            raise Exception
+        
+            
+            
+        # except StaleElementReferenceException:
+        #     print(f"Attempt {attempt + 1} of {retries}: Table element stale, retrying...")
+        #     time.sleep(2)
+
+        # except Exception:
+        #     print("Wrong table type provided by interface")
+        #     time.sleep(2)
+    print(f"Failed to locate element: {value} after {retries} retries.")
     return None  # Return None instead of throwing an exception
-def get_table_html_with_retry(driver, by, value, retries=3):
+
+def get_dataframe(table_element):
+    if isinstance(table_element, str):
+        try:
+            dfs = pd.read_html(table_element)
+            if dfs:
+                policy_df = dfs[0]
+            else:
+                raise ValueError("No tables found in HTML.")
+        except Exception as e:
+            raise RuntimeError(f"Failed to parse HTML table: {e}")
+    elif isinstance(table_element, pd.DataFrame):
+        policy_df = table_element
+    else:
+        raise TypeError(f"Unexpected input type for table_element: {type(table_element)}")
+
+    policy_df = policy_df.fillna("")
+
+    return policy_df
+def get_html(driver, by, value, retries=3):
     """Retries getting table HTML to handle stale element issues."""
     for attempt in range(retries):
         try:
-            table_element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((by, value)))
+            table_element = WebDriverWait(driver, 15).until(EC.presence_of_element_located((by, value)))
             return table_element.get_attribute('outerHTML')
         except StaleElementReferenceException:
             print(f"Attempt {attempt + 1} of {retries}: Table element stale, retrying...")
@@ -115,7 +284,7 @@ def append_to_excel(file_path, buffer):
     """Append buffer data to Excel file in batches or force flush when needed"""
 
     buffer_df = pd.DataFrame(buffer)
-    print(file_path)
+    #print(file_path)
     # Ensure existing data is loaded if file exists
     if os.path.exists(file_path):
         if os.path.exists(file_path):
