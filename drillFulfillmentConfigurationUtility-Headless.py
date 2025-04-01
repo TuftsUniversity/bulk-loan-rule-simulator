@@ -16,6 +16,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import secrets_local
 import numpy as np
 import sys
+from collections import defaultdict
 
 sys.path.append("scripts/")
 from functions import *
@@ -27,7 +28,7 @@ INPUT_DIR_USER_GROUP = "./input/User Groups"
 OUTPUT_FILE = "Bulk_Checkout_Request_Results.xlsx"
 OUTPUT_DIR = "./Output"
 BATCH_SIZE = 10  # Buffer size for writing to Excel
-
+N = 8
 
 # --- Load Input Data ---
 def load_first_excel(directory):
@@ -244,25 +245,66 @@ def process_user_group(thread_id, user_group_data, item_policy_data):
     driver.quit()
     print("Processing completed.")
 # --- Multithreading Setup ---
-def main():
-    N = 4  # Number of browsers to spawn
-    thread_list = []
-    user_group_chunks = np.array_split(user_group_data, N)  # Split data into N chunks
+# def main():
+#     N = 4  # Number of browsers to spawn
+#     thread_list = []
+#     user_group_chunks = np.array_split(user_group_data, N)  # Split data into N chunks
+def chunk_by_user_group(df, N):
+    grouped = list(df.groupby("Primary Identifier"))
+    total_groups = len(grouped)
 
+    if total_groups <= N:
+        grouped = list(df.groupby(["Primary Identifier", "Location Name"]))
+        # Case: fewer user groups than threads → assign 1 group per thread (some threads empty)
+        
+        total_groups = len(grouped)
+        if total_groups <= N:
+            N = total_groups
+
+        # chunks = [group[1] for group in grouped] + [pd.DataFrame()] * (N - total_groups)
+    
+
+    # else:
+        # Case: more user groups → distribute them round-robin to minimize distinct user groups per chunk
+
+    chunks = [pd.DataFrame() for _ in range(N)]
+    for i, (_, group_df) in enumerate(grouped):
+        chunks[i % N] = pd.concat([chunks[i % N], group_df], ignore_index=True)
+
+    return chunks
+
+def cross_join(df1, df2):
+    df1['key'] = 1
+    df2['key'] = 1
+    result = pd.merge(df1, df2, on='key').drop('key', axis=1)
+    return result
 
 # --- Multithreading Setup ---
 def main():
-    N = 4  # Number of browsers to spawn
+     # Number of browsers to spawn
     thread_list = []
-    user_group_chunks = np.array_split(user_group_data, N)  # Split data into N chunks
 
-    
+    number_of_users = len(user_group_data)
+
+    # if number_of_users <= 8:
+    #     N = number_of_users
+
+    # elif number_of_users > 8:
+    #     N = 8
+    combined_df = cross_join(user_group_data, item_policy_data)
+    combined_df = combined_df.sort_values(by=['Primary Identifier', 'Location Name', 'Item Policy'])
+
+    combined_df.to_excel("Combined DF.xlsx", index=False) 
+
+    sys.exit()
+    # Chunk the dataframe
+    scenario_chunks = chunk_by_user_group(combined_df, N)
     # Start threads
     for i in range(N):
         t = threading.Thread(
             name=f"Thread-{i}",
             target=process_user_group,
-            args=(i, user_group_chunks[i], item_policy_data),
+            args=(i, scenario_chunks[i], item_policy_data),
         )
         t.start()
         print(f"{t.name} started!")
@@ -313,18 +355,18 @@ if __name__ == "__main__":
     main()
 
 
-def merge_excel_files(num_threads):
-    """Merge Excel files from all threads into a single file."""
-    all_data = []
-    for i in range(num_threads):
-        file_path = f"{OUTPUT_DIR}/output_thread_{i}.xlsx"
-        if os.path.exists(file_path):
-            df = pd.read_excel(file_path, engine="openpyxl")
-            all_data.append(df)
+# def merge_excel_files(num_threads):
+#     """Merge Excel files from all threads into a single file."""
+#     all_data = []
+#     for i in range(num_threads):
+#         file_path = f"{OUTPUT_DIR}/output_thread_{i}.xlsx"
+#         if os.path.exists(file_path):
+#             df = pd.read_excel(file_path, engine="openpyxl")
+#             all_data.append(df)
 
-    if all_data:
-        final_df = pd.concat(all_data, ignore_index=True)
-        final_df.to_excel(OUTPUT_FILE, index=False)
+#     if all_data:
+#         final_df = pd.concat(all_data, ignore_index=True)
+#         final_df.to_excel(OUTPUT_FILE, index=False)
 
 
 # --- Multithreading Setup ---
@@ -352,16 +394,16 @@ def merge_excel_files(num_threads):
 #     merge_excel_files(N)
 #     print("Test completed!")
 
-def merge_excel_files(num_threads):
-    """Merge Excel files from all threads into a single file."""
-    all_data = []
-    for i in range(num_threads):
-        file_path = f"{OUTPUT_DIR}/output_thread_{i}.xlsx"
-        if os.path.exists(file_path):
-            df = pd.read_excel(file_path, engine="openpyxl")
-            all_data.append(df)
+# def merge_excel_files(num_threads):
+#     """Merge Excel files from all threads into a single file."""
+#     all_data = []
+#     for i in range(num_threads):
+#         file_path = f"{OUTPUT_DIR}/output_thread_{i}.xlsx"
+#         if os.path.exists(file_path):
+#             df = pd.read_excel(file_path, engine="openpyxl")
+#             all_data.append(df)
 
-    if all_data:
-        final_df = pd.concat(all_data, ignore_index=True)
-        final_df.to_excel(OUTPUT_FILE, index=False)
+#     if all_data:
+#         final_df = pd.concat(all_data, ignore_index=True)
+#         final_df.to_excel(OUTPUT_FILE, index=False)
 

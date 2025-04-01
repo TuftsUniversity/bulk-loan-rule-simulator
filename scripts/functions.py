@@ -24,7 +24,7 @@ def safe_find_element(driver, by, value, retries=3):
     """Find element with retries, and refresh the page if retries fail."""
     for attempt in range(retries):
         try:
-            return WebDriverWait(driver, 15).until(EC.visibility_of_element_located((by, value)))
+            return WebDriverWait(driver, 25).until(EC.visibility_of_element_located((by, value)))
         except StaleElementReferenceException:
             print(f"Retry {attempt + 1} of {retries}: Element stale, retrying...")
             time.sleep(2)
