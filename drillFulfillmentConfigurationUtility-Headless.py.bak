@@ -149,9 +149,13 @@ def process_user_group(thread_id, user_group_data, item_policy_data):
             print(f"Processing item {barcode} - {item_policy} - {location}")
 
             # Enter barcode (Refind element before interaction)
-            
-            item_field = safe_find_element(driver, By.XPATH, "//input[@id='pageBeanbarcode']")
-            send_keys_with_retry(driver, By.XPATH, "//input[@id='pageBeanbarcode']", barcode)
+            item_field = safe_find_element(
+                driver, By.XPATH, "//input[@id='pageBeanbarcode']"
+            )
+
+            send_keys_with_retry(
+                driver, By.XPATH, "//input[@id='pageBeanbarcode']", barcode
+            )
 
             # Click OK button (Refind each time)
             ok_button = safe_find_element(driver, By.ID, "cbuttonok")

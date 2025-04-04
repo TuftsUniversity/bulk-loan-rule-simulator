@@ -11,7 +11,7 @@ import sys
 
 def login(driver, username, password):
     """Login to Alma"""
-    username_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'username')))
+    username_field = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'username')))
     username_field.send_keys(username)
 
     password_field = driver.find_element(By.ID, 'password')
@@ -297,3 +297,18 @@ def append_to_excel(file_path, buffer):
 
     buffer.clear()  # Clear buffer after writing
 
+def write_buffer_to_excel(buffer, thread_id, output_dir):
+    if not buffer:
+        return
+
+    os.makedirs(output_dir, exist_ok=True)
+    file_path = os.path.join(output_dir, f"output_thread_{thread_id}.xlsx")
+    df = pd.DataFrame(buffer)
+
+    if os.path.exists(file_path):
+        with pd.ExcelWriter(file_path, mode="a", if_sheet_exists="overlay", engine="openpyxl") as writer:
+            df.to_excel(writer, index=False, header=False)
+    else:
+        df.to_excel(file_path, index=False)
+
+    print(f"✅ Thread-{thread_id} wrote {len(df)} rows to {file_path}")
