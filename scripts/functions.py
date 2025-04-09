@@ -7,6 +7,7 @@ import pandas as pd
 import os
 import time
 from openpyxl import load_workbook
+from openpyxl.styles import PatternFill
 import sys
 
 def login(driver, username, password):
@@ -297,6 +298,10 @@ def append_to_excel(file_path, buffer):
 
     buffer.clear()  # Clear buffer after writing
 
+import os
+import pandas as pd
+from openpyxl import load_workbook
+
 def write_buffer_to_excel(buffer, thread_id, output_dir):
     if not buffer:
         return
@@ -305,10 +310,82 @@ def write_buffer_to_excel(buffer, thread_id, output_dir):
     file_path = os.path.join(output_dir, f"output_thread_{thread_id}.xlsx")
     df = pd.DataFrame(buffer)
 
-    if os.path.exists(file_path):
-        with pd.ExcelWriter(file_path, mode="a", if_sheet_exists="overlay", engine="openpyxl") as writer:
-            df.to_excel(writer, index=False, header=False)
-    else:
-        df.to_excel(file_path, index=False)
+    try:
+        if os.path.exists(file_path):
+            # Load workbook to determine start row
+            book = load_workbook(file_path)
+            sheet = book.active
+            start_row = sheet.max_row
 
-    print(f"✅ Thread-{thread_id} wrote {len(df)} rows to {file_path}")
+            with pd.ExcelWriter(file_path, engine="openpyxl", mode="a", if_sheet_exists="overlay") as writer:
+                df.to_excel(writer, index=False, header=False, startrow=start_row)
+        else:
+            df.to_excel(file_path, index=False)
+
+        print(f"✅ Thread-{thread_id} wrote {len(df)} rows to {file_path}")
+        buffer.clear()
+    except Exception as e:
+        print(f"❌ Error in write_buffer_to_excel for Thread-{thread_id}: {e}")
+
+
+def merge_excel_files(num_threads, OUTPUT_DIR, OUTPUT_FILE):
+    """Merge Excel files from all threads into a single file."""
+    all_data = []
+    
+    for i in range(num_threads):
+        file_path = f"{OUTPUT_DIR}/output_thread_{i}.xlsx"
+        if os.path.exists(file_path):
+            print(f"✅ Including: {file_path}")
+            df = pd.read_excel(file_path, engine="openpyxl")
+            all_data.append(df)
+        else:
+            print(f"⚠️ File not found: {file_path}")
+
+    if all_data:
+        final_df = pd.concat(all_data, ignore_index=True)
+        
+        # Remove old file to ensure it's not partially overwritten
+        if os.path.exists(OUTPUT_FILE):
+            os.remove(OUTPUT_FILE)
+
+        final_df.to_excel(OUTPUT_FILE, index=False)
+        print(f"📁 Merged {len(all_data)} files. Final output: {OUTPUT_FILE} ({os.path.getsize(OUTPUT_FILE)/1024:.2f} KB)")
+    else:
+        print("❌ No files to merge.")
+
+def highlight_unique_values(file_path, output_path):
+    # Load the spreadsheet into a pandas DataFrame
+    df = pd.read_excel(file_path, engine='openpyxl')
+
+    # Ensure column G exists
+    if len(df.columns) < 7:  # Column G is the 8th column (0-indexed)
+        raise ValueError("Column G does not exist in the spreadsheet.")
+
+    df = df.sort_values(by=['TOU (Loan)'])
+    # Get unique values in column G
+    unique_values = df.iloc[:, 6].dropna().unique()  # Column H (0-indexed)
+    color_map = {}
+
+    # Generate unique colors for each unique value in Column H
+    for i, value in enumerate(unique_values):
+        # Generate color codes in ARGB format (8-character hex string)
+        red = (100 + (i * 50) % 256) % 256
+        green = (150 + (i * 30) % 256) % 256
+        blue = (200 + (i * 70) % 256) % 256
+        color_map[value] = f"FF{red:02X}{green:02X}{blue:02X}"
+
+    # Load workbook and active sheet
+    workbook = load_workbook(file_path)
+    sheet = workbook.active
+
+    # Iterate through column H and apply fill
+    for row in range(2, sheet.max_row + 1):  # Skip header (row 1)
+        cell = sheet[f'G{row}']
+        value = cell.value
+        if value in color_map:
+            fill = PatternFill(start_color=color_map[value], end_color=color_map[value], fill_type="solid")
+            cell.fill = fill
+
+    # Save the updated workbook
+    workbook.save(output_path)
+    print(f"File saved with highlighted column H: {output_path}")

@@ -25,26 +25,25 @@ if scripts_dir not in sys.path:
 from functions import *
 
 
-
 # --- Constants & Configurations ---
 INPUT_DIR_ITEM_POLICY = "./input/Item Policies and Locations"
 INPUT_DIR_USER_GROUP = "./input/User Groups"
 OUTPUT_FILE = "Bulk_Checkout_Request_Results.xlsx"
+FORMATTED_OUTPUT_FILE = "Bulk_Checkout_Request_Results - Highlighted.xlsx"
 OUTPUT_DIR = "Output"
-BUFFER_WRITE_INTERVAL = 10  # Buffer size for writing to Excel
+BUFFER_WRITE_INTERVAL = 10
 
-N = 3
-# Shared index tracker
+N = 4
 row_index_lock = threading.Lock()
 row_index = 0
-# --- Load Input Data ---
+order_of_loan_policy_columns = []
+order_of_request_policy_columns = []
 def load_first_excel(directory):
     files = glob.glob(os.path.join(directory, "*.xlsx"))
     if not files:
         print(f"No Excel files found in {directory}. Exiting.")
         exit()
     return pd.read_excel(files[0], dtype="str", engine="openpyxl")
-
 
 item_policy_data = load_first_excel(INPUT_DIR_ITEM_POLICY)
 user_group_data = load_first_excel(INPUT_DIR_USER_GROUP)
@@ -56,7 +55,6 @@ def init_driver():
     chrome_options.add_argument("--disable-dev-shm-usage")
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    
     return driver
 
 def worker_thread(thread_id, combined_df):
@@ -64,29 +62,27 @@ def worker_thread(thread_id, combined_df):
     driver = init_driver()
     buffer = []
     current_user_id = None
-    driver.get(secrets_local.alma_base_url)
-    login(driver, secrets_local.username, secrets_local.password)
-    time.sleep(20)
-    try:
-        modal = driver.find_element(
-            By.XPATH, "//div[@id='onetrust-close-btn-container']//button"
-        )
-        print("GDPR modal detected. Attempting to close it.")
-        modal = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, "//div[@id='onetrust-close-btn-container']//button")
+
+    def navigate_to_checkout():
+        driver.get(secrets_local.alma_base_url)
+        login(driver, secrets_local.username, secrets_local.password)
+        time.sleep(20)
+        try:
+            modal = driver.find_element(By.XPATH, "//div[@id='onetrust-close-btn-container']//button")
+            print("GDPR modal detected. Attempting to close it.")
+            modal = WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.XPATH, "//div[@id='onetrust-close-btn-container']//button"))
             )
-        )
-        modal.click()
-        print("GDPR modal closed.")
-    except TimeoutException:
-        print("No GDPR modal detected.")
+            modal.click()
+            print("GDPR modal closed.")
+        except TimeoutException:
+            print("No GDPR modal detected.")
+        except:
+            print("No GDPR modal")
 
-    except:
-        print("No GDPR modal")
+        driver.get("https://tufts.alma.exlibrisgroup.com/ng/page;u=%2Fful%2Faction%2FpageAction.do%3FxmlFileName%3Dtou.fulfillment_configuration_utility.xml&pageViewMode%3DEdit&operation%3DLOAD&backUrl%3D%2Fful%2Faction%2Fmenu.do%3F&pageBean.selectedTab%3DtouType.loan&pageBean.touType%3DLoan&pageBean.displayDueDate%3Dtrue&pageBean.displayReturnDate%3Dtrue&pageBean.currentUrl%3DxmlFileName%253Dtou.fulfillment_configuration_utility.xml%2526pageViewMode%253DEdit%2526operation%253DLOAD%2526backUrl%253D%252Fful%252Faction%252Fmenu.do%253F%2526pageBean.selectedTab%253DtouType.loan%2526pageBean.touType%253DLoan%2526pageBean.displayDueDate%253Dtrue%2526pageBean.displayReturnDate%253Dtrue%2526resetPaginationContext%253Dtrue%2526showBackButton%253Dfalse&pageBean.navigationBackUrl%3D..%252Faction%252Fhome.do&resetPaginationContext%3Dtrue&showBackButton%3Dfalse&menuKey%3Dcom.exlibris.dps.adm.general.menu.initial.Fulfillment.FulfillmentHeader.FulConfigurationUtility")
 
-    
-    driver.get("https://tufts.alma.exlibrisgroup.com/ng/page;u=%2Fful%2Faction%2FpageAction.do%3FxmlFileName%3Dtou.fulfillment_configuration_utility.xml&pageViewMode%3DEdit&operation%3DLOAD&backUrl%3D%2Fful%2Faction%2Fmenu.do%3F&pageBean.selectedTab%3DtouType.loan&pageBean.touType%3DLoan&pageBean.displayDueDate%3Dtrue&pageBean.displayReturnDate%3Dtrue&pageBean.currentUrl%3DxmlFileName%253Dtou.fulfillment_configuration_utility.xml%2526pageViewMode%253DEdit%2526operation%253DLOAD%2526backUrl%253D%252Fful%252Faction%252Fmenu.do%253F%2526pageBean.selectedTab%253DtouType.loan%2526pageBean.touType%253DLoan%2526pageBean.displayDueDate%253Dtrue%2526pageBean.displayReturnDate%253Dtrue%2526resetPaginationContext%253Dtrue%2526showBackButton%253Dfalse&pageBean.navigationBackUrl%3D..%252Faction%252Fhome.do&resetPaginationContext%3Dtrue&showBackButton%3Dfalse&menuKey%3Dcom.exlibris.dps.adm.general.menu.initial.Fulfillment.FulfillmentHeader.FulConfigurationUtility")
+    navigate_to_checkout()
 
     while True:
         with row_index_lock:
@@ -96,14 +92,15 @@ def worker_thread(thread_id, combined_df):
             row_index += 1
 
         user_id = row["Primary Identifier"]
+        barcode = row["Barcode"]
+        item_policy = row["Item Policy"]
+        location = row["Temporary Location Name"] if row["Temporary Physical Location In Use"] == "Yes" else row["Location Name"]
+        user_group = row["User Group"]
 
-        # Change user if needed
-        if user_id != current_user_id:
+        def load_user():
+            nonlocal current_user_id
             try:
                 user_menu = safe_find_element(driver, By.ID, "PICKUP_ID_pageBeandisplayNameOfUserOrUserIdendifier")
-                user_id = row["Primary Identifier"].strip()
-                user_group = row["User Group"].strip()
-
                 user_menu.click()
 
                 modal = safe_find_element(driver, By.CLASS_NAME, "modal")
@@ -128,89 +125,84 @@ def worker_thread(thread_id, combined_df):
                 current_user_id = user_id
                 print(driver.page_source)
             except Exception as e:
-                print(f"Error switching user: {e}")
-                continue
+                print(f"Thread-{thread_id} error switching user: {e}")
 
-        
+        if user_id != current_user_id:
+            load_user()
 
-        
         try:
-            barcode = row["Barcode"]
-            item_policy = row["Item Policy"]
-            location = (
-                row["Temporary Location Name"]
-                if row["Temporary Physical Location In Use"] == "Yes"
-                else row["Location Name"]
-            )
-
-            print(f"Processing item {barcode} - {item_policy} - {location}")
-
-            # Enter barcode (Refind element before interaction)
             
-            item_field = safe_find_element(driver, By.XPATH, "//input[@id='pageBeanbarcode']")
-            send_keys_with_retry(driver, By.XPATH, "//input[@id='pageBeanbarcode']", barcode)
-
-            item_field = safe_find_element(driver, By.XPATH, "//input[@id='pageBeanbarcode']")
+            print(f"Processing item {barcode} - {item_policy} - {location}")
             send_keys_with_retry(driver, By.XPATH, "//input[@id='pageBeanbarcode']", barcode)
             click_element_with_retry(driver, By.ID, "cbuttonok")
 
             loan_result = get_table_html_with_retry(driver, By.ID, "TABLE_DATA_policiesList", "loan")
+            
             request_result = get_table_html_with_retry(driver, By.ID, "TABLE_DATA_policiesList", "request")
-            loan_fulfillment_rule_name = loan_result[0]
-            loan_tou_name = loan_result[1]
-            loan_dict = loan_result[2]
-            request_policy_list = get_table_html_with_retry(driver, By.ID, "TABLE_DATA_policiesList", "request")
-            # --- Extract Request Tab Data ---
+            loan_result_policy_dict = loan_result[2]
+            request_result_policy_dict = request_result[2]
 
-            request_fulfillment_rule_name = request_policy_list[0]
-            request_tou_name = request_policy_list[1]
-            request_dict = request_policy_list[2]
-            fulfillment_unit_name = loan_result[3]
+            if row_index == 0:
+                global order_of_loan_policy_columns, order_of_request_policy_columns
+                order_of_loan_policy_columns = list(loan_result_policy_dict.keys())
+                order_of_request_policy_columns = list(request_result_policy_dict.keys())
 
-
+            # Create initial row dict with static values first
             row_dict = {
-                    "User ID": user_id,
-                    "User Group": user_group,
-                    "Barcode": barcode,
-                    "Item Policy": item_policy,
-                    "Location": location,
-                    "Fulfillment Unit Name": fulfillment_unit_name,
-                    "Fulfillment Rule (Loan)": loan_fulfillment_rule_name,
-                    "TOU (Loan)": loan_tou_name,
-                    "Fulfillment Rule (Request)": request_fulfillment_rule_name,
-                    "TOU (Request)": request_tou_name,
-                    
-                }
-            row_dict.update(loan_dict)
-            row_dict.update(request_dict)
+                "User ID": user_id,
+                "User Group": user_group,
+                "Barcode": barcode,
+                "Item Policy": item_policy,
+                "Location": location,
+                "Fulfillment Unit Name": loan_result[3],
+                "Fulfillment Rule (Loan)": loan_result[0],
+                "TOU (Loan)": loan_result[1],
+                "Fulfillment Rule (Request)": request_result[0],
+                "TOU (Request)": request_result[1]
+            }
+            # Now safely add policy values
+            row_dict.update(loan_result_policy_dict)
+            row_dict.update(request_result_policy_dict)
+
+            # Reorder the policy columns using the column order
+            ordered_loan_dict = {col: row_dict.get(col, "") for col in order_of_loan_policy_columns}
+            ordered_request_dict = {col: row_dict.get(col, "") for col in order_of_request_policy_columns}
+
+            # Re-apply reordered keys to the final row dict
+            row_dict.update(ordered_loan_dict)
+            row_dict.update(ordered_request_dict)
+
             buffer.append(row_dict)
-            buffer.append(row_dict)
+
+            
         except Exception as e:
             print(f"Thread-{thread_id} failed to process item {barcode}: {e}")
+            print(f"Thread-{thread_id} attempting recovery...")
+
+            # Try to reload the page and reset the user
+            navigate_to_checkout()
+            load_user()
 
         if len(buffer) >= BUFFER_WRITE_INTERVAL:
             write_buffer_to_excel(buffer, thread_id, OUTPUT_DIR)
             buffer.clear()
 
-    # Final write
     if buffer:
         write_buffer_to_excel(buffer, thread_id, OUTPUT_DIR)
-
+    
     driver.quit()
     print(f"Thread-{thread_id} finished.")
-def cross_join(df1, df2):
-    df1['key'] = 1
-    df2['key'] = 1
-    result = pd.merge(df1, df2, on='key').drop('key', axis=1)
-    return result
-def main():
-    
 
+def cross_join(df1, df2):
+    df1["key"] = 1
+    df2["key"] = 1
+    return pd.merge(df1, df2, on="key").drop("key", axis=1)
+
+def main():
     combined_df = cross_join(user_group_data, item_policy_data)
     combined_df = combined_df.sort_values(by=["Primary Identifier", "Location Name", "Item Policy"])
 
     threads = []
-    
     for i in range(N):
         t = threading.Thread(target=worker_thread, args=(i, combined_df))
         t.start()
@@ -218,7 +210,9 @@ def main():
 
     for t in threads:
         t.join()
+    merge_excel_files(N, OUTPUT_DIR, OUTPUT_FILE)
 
+    highlight_unique_values(FORMATTED_OUTPUT_FILE, OUTPUT_DIR)
     print("All threads complete.")
 
 if __name__ == "__main__":
