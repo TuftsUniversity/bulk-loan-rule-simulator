@@ -347,7 +347,7 @@ def merge_excel_files(num_threads, OUTPUT_DIR, OUTPUT_FILE):
         # Remove old file to ensure it's not partially overwritten
         if os.path.exists(OUTPUT_FILE):
             os.remove(OUTPUT_FILE)
-
+        
         final_df.to_excel(OUTPUT_FILE, index=False)
         print(f"📁 Merged {len(all_data)} files. Final output: {OUTPUT_FILE} ({os.path.getsize(OUTPUT_FILE)/1024:.2f} KB)")
     else:
@@ -361,7 +361,7 @@ def highlight_unique_values(file_path, output_path):
     if len(df.columns) < 7:  # Column G is the 8th column (0-indexed)
         raise ValueError("Column G does not exist in the spreadsheet.")
 
-    df = df.sort_values(by=['TOU (Loan)'])
+    df = df.sort_values(by=["Location", "Fulfillment Rule (Loan)"])
     # Get unique values in column G
     unique_values = df.iloc[:, 6].dropna().unique()  # Column H (0-indexed)
     color_map = {}

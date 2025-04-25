@@ -1,0 +1,59 @@
+Item Policy,Locations,Loan Length
+AC Adaptor,SMFA,4 Hours
+Apple Charger,Music,4 Hours
+Apple Charger,SMFA,4 Hours
+Apple Charger,Hirsh,4 Hours
+AV Cable,Music,4 Hours
+AV Cable,SMFA,4 Hours
+AV Cable,Hirsh,4 Hours
+Calculator,Hirsh,4 Hours
+External Drive,Music,4 Hours
+External Drive,SMFA,4 Hours
+External Drive,Hirsh,4 Hours
+Headphones,Music,4 Hours
+Headphones,SMFA,4 Hours
+Headphones,Hirsh,4 Hours
+Laptop,Music,4 Hours
+Laptop,SMFA,4 Hours
+Laptop,Hirsh,4 Hours
+Laptop Accessories,Hirsh,4 Hours
+Laptop Accessories,SMFA,4 Hours
+Mac Accessory,Hirsh,4 Hours
+Mac Accessory,SMFA,4 Hours
+Mac Av Adaptor,Hirsh,4 Hours
+Mac Av Adaptor,SMFA,4 Hours
+Mac Laptop,Hirsh,4 Hours
+Mobile Device Charger,Hirsh,4 Hours
+Mobile Device Charger,SMFA,4 Hours
+Mouse,Hirsh,4 Hours
+PC Accessory,SMFA,4 Hours
+PC Laptop,Hirsh,4 Hours
+Power Remote,Hirsh,4 Hours
+Universal Charger,SMFA,4 Hours
+AC Adaptor,Ginn,6 Hours
+AV Cable,Ginn,6 Hours
+Calculator,Ginn,6 Hours
+Digital Camera,Ginn,6 Hours
+External Drive,Ginn,6 Hours
+Headphones,Ginn,6 Hours
+Mac Av Adaptor,Ginn,6 Hours
+Microphone,Ginn,6 Hours
+Mobile Device Charger,Ginn,6 Hours
+Mouse,Ginn,6 Hours
+Power Remote,Ginn,6 Hours
+Projector,Ginn,6 Hours
+Projector Screen,Ginn,6 Hours
+Tripod,Ginn,6 Hours
+AV Cable,Tisch,8 Hours
+Apple Charger,Ginn,Midnight/Closing
+Laptop,Ginn,Midnight/Closing
+Universal Charger,Ginn,Midnight/Closing
+Headphones,Tisch,24 Hours
+Mac Av Adaptor,Tisch,24 Hours
+AV Equipment,Music,3 days
+AV Equipment,SMFA,3 days
+Calculator,Tisch,4 days
+External Drive,Tisch,4 days
+Mac Laptop,Tisch,4 days
+Mouse,Tisch,4 days
+Laptop,Vet,7 days
