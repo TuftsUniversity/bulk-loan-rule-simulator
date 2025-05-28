@@ -1,4 +1,69 @@
 Library, Current Item Policy, Loan Length, Set Name, Result
-SMFA Library,AC Adaptor,4 Hours,AC Adaptor - SMFA Library - to 4 Hours and Item Material Type AC Adaptor,200
-Music Library,Apple Charger,4 Hours,Apple Charger - Music Library - to 4 Hours and Item Material Type Apple Charger,200
-SMFA Library,Apple Charger,4 Hours,Apple Charger - SMFA Library - to 4 Hours and Item Material Type Apple Charger,200
+SMFA Library,AC Adaptor,4 Hours,AC Adaptor - SMFA Library - to 4 Hours and Item Material Type Equipment,{"total_record_count":0}-set already deleted
+Music Library,Apple Charger,4 Hours,Apple Charger - Music Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Apple Charger,4 Hours,Apple Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,Apple Charger,4 Hours,Apple Charger - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+Music Library,AV Cable,4 Hours,AV Cable - Music Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,AV Cable,4 Hours,AV Cable - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,AV Cable,4 Hours,AV Cable - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,Calculator,4 Hours,Calculator - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+Music Library,External Drive,4 Hours,External Drive - Music Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,External Drive,4 Hours,External Drive - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,External Drive,4 Hours,External Drive - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+Music Library,Headphones,4 Hours,Headphones - Music Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Headphones,4 Hours,Headphones - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,Headphones,4 Hours,Headphones - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+Music Library,Laptop,4 Hours,Laptop - Music Library - to 4 Hours and Item Material Type Laptop,200
+SMFA Library,Laptop,4 Hours,Laptop - SMFA Library - to 4 Hours and Item Material Type Laptop,200
+Hirsh Library,Laptop,4 Hours,Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,200
+Hirsh Library,Laptop,4 Hours,Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,200
+Hirsh Library,Laptop,4 Hours,Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,200
+Hirsh Library,Laptop Accessories,4 Hours,Laptop Accessories - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Laptop Accessories,4 Hours,Laptop Accessories - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,Mac Accessory,4 Hours,Mac Accessory - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Mac Accessory,4 Hours,Mac Accessory - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,Mac Av Adaptor,4 Hours,Mac Av Adaptor - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Mac Av Adaptor,4 Hours,Mac Av Adaptor - SMFA Library - to 4 Hours and Item Material Type Equipment,{"total_record_count":0}-set already deleted
+Hirsh Library,Mac Laptop,4 Hours,Mac Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,{"total_record_count":0}-set already deleted
+Hirsh Library,Mobile Device Charger,4 Hours,Mobile Device Charger - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Mobile Device Charger,4 Hours,Mobile Device Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,Mouse,4 Hours,Mouse - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,PC Accessory,4 Hours,PC Accessory - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Hirsh Library,PC Laptop,4 Hours,PC Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,{"total_record_count":0}-set already deleted
+Hirsh Library,Power Remote,4 Hours,Power Remote - Hirsh Library - to 4 Hours and Item Material Type Equipment,200
+SMFA Library,Universal Charger,4 Hours,Universal Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,200
+Ginn Library,AC Adaptor,Midnight/Closing,AC Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,AC Adaptor,Midnight/Closing,AC Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,AV Cable,Midnight/Closing,AV Cable - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Calculator,Midnight/Closing,Calculator - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Digital Camera,Midnight/Closing,Digital Camera - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,External Drive,Midnight/Closing,External Drive - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Headphones,Midnight/Closing,Headphones - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Mac Av Adaptor,Midnight/Closing,Mac Av Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,{"total_record_count":0}-set already deleted
+Ginn Library,Microphone,Midnight/Closing,Microphone - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Mobile Device Charger,Midnight/Closing,Mobile Device Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Mouse,Midnight/Closing,Mouse - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Power Remote,Midnight/Closing,Power Remote - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Projector,Midnight/Closing,Projector - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Projector,Midnight/Closing,Projector - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Projector Screen,Midnight/Closing,Projector Screen - Ginn Library - to Midnight/Closing and Item Material Type Equipment,{"total_record_count":0}-set already deleted
+Ginn Library,Tripod,Midnight/Closing,Tripod - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Tisch Library,AV Cable,8 Hours,AV Cable - Tisch Library - to 8 Hours and Item Material Type Equipment,200
+Ginn Library,Apple Charger,Midnight/Closing,Apple Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Ginn Library,Laptop,Midnight/Closing,Laptop - Ginn Library - to Midnight/Closing and Item Material Type Laptop,200
+Ginn Library,Universal Charger,Midnight/Closing,Universal Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,200
+Tisch Library,Headphones,24 Hours,Headphones - Tisch Library - to 24 Hours and Item Material Type Equipment,200
+Tisch Library,Mac Av Adaptor,24 Hours,Mac Av Adaptor - Tisch Library - to 24 Hours and Item Material Type Equipment,200
+Music Library,AV Equipment,3 days,AV Equipment - Music Library - to 3 days and Item Material Type Equipment,200
+SMFA Library,AV Equipment,3 days,AV Equipment - SMFA Library - to 3 days and Item Material Type Equipment,200
+Tisch Library,Calculator,4 days,Calculator - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,External Drive,4 days,External Drive - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mac Laptop,4 days,Mac Laptop - Tisch Library - to 4 days and Item Material Type Laptop,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,200
+Vet Library,Laptop,7 days,Laptop - Vet Library - to 7 days and Item Material Type Equipment,200

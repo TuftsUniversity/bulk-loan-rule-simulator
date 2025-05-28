@@ -82,7 +82,7 @@ set_creation_body_literal_5 = '''"))</query>
 
 headers = {'Content-Type': 'application/xml', 'Accept': 'application/json'}
 
-log_file = open("Result of Creating Sets.csv", "w+")
+log_file = open("Result of Deleting Sets.csv", "w+")
 log_file.write("Library, Current Item Policy, Loan Length, Set Name, Result\n")
 
 for index, row in df.iterrows():
@@ -114,37 +114,35 @@ for index, row in df.iterrows():
     print("\n")
     print(body)
     
-    result_post = requests.post(secrets_local.alma_sandbox_set_api_url + secrets_local.alma_sandbox_configuration_api_key, headers=headers, data=body)
+    #result = requests.post(secrets_local.alma_sandbox_set_api_url + secrets_local.alma_sandbox_configuration_api_key, headers=headers, data=body)
+    result = requests.get(secrets_local.alma_sandbox_set_api_url + secrets_local.alma_sandbox_configuration_api_key + "&q=name~" + name, headers=headers, data=body)
 
-    if result_post.status_code == 200 or result_post.status_code == 201 or result_post.status_code == 202 or result_post.status_code == 203 or result_post.status_code == 204:
-        result_json = result_post.json()
-        print(json.dumps(result_json))
-        id = result_json['id']
 
-        result_get = requests.get(secrets_local.alma_sandbox_set_api_url + secrets_local.alma_sandbox_configuration_api_key + "&q=id~" + id, headers=headers)
 
-        if result_get.status_code == 200 or result_get.status_code == 201 or result_get.status_code == 202 or result_get.status_code == 203 or result_get.status_code == 204:
 
-            result_get_json = result_get.json()
-            if result_get_json['total_record_count'] >= 1: 
-                log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result_post.status_code) + "\n")
-            else:
-                id = result_json['id']
+    if result.status_code == 200 or result.status_code == 201 or result.status_code == 202 or result.status_code == 203 or result.status_code == 204:
+        result_dict = result.json()
+        if 'set' in result_dict:
+            result_list = result_dict['set']
+
             
+            for set in result_list:
+                id = set['id']
+
+                print(id)
+                log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result.status_code) + "\n")
+
                 result_delete = requests.delete(secrets_local.alma_sandbox_set_api_url_base + "/" + id + "?apikey=" + secrets_local.alma_sandbox_configuration_api_key, headers=headers, data=body)
 
                 if result_delete.status_code == 200 or result_delete.status_code == 201 or result_delete.status_code == 202 or result_delete.status_code == 203 or result_delete.status_code == 204:
-                    
-                    log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + "no records.  deleted set" + str(result_delete.status_code) + "\n")
-                else:
-                    log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + " set needs to be deleted manually.  no records"  + str(result_delete.status_code) + "\n")
-        else:    
-            
-            log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + "error check set " + str(id) + "-" + str(result_get.status_code) + "\n")
+                    log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result_delete.status_code) + "\n")
+        else:
+            log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result.text) +  "-set already deleted\n")
 
     else:
-        log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result_post.text) + "\n")
+        log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result.text) + "\n")
 
+    
 
 log_file.close()
 
