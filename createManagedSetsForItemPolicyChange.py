@@ -77,8 +77,16 @@ set_creation_body_literal_3 = '''&quot; AND Current library equals (('''
 set_creation_body_literal_4 = ''' : All)))">
     ITEM where ITEM ((itemPolicy OUTER_EQUAL "'''
 
-set_creation_body_literal_5 = '''"))</query>
+
+
+set_creation_body_literal_5 = '''" AND itemLibrary OUTER_EQUAL "'''
+
+
+set_creation_body_literal_6 = '''))</query>
 </set>'''
+
+
+
 
 headers = {'Content-Type': 'application/xml', 'Accept': 'application/json'}
 
@@ -107,6 +115,8 @@ for index, row in df.iterrows():
         + set_creation_body_literal_4
         + item_policy_code
         + set_creation_body_literal_5
+        + library_code 
+        + set_creation_body_literal_6
     )
 
 
@@ -127,6 +137,7 @@ for index, row in df.iterrows():
 
             result_get_json = result_get.json()
             if result_get_json['total_record_count'] >= 1: 
+                            
                 log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result_post.status_code) + "\n")
             else:
                 id = result_json['id']

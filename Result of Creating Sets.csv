@@ -1,59 +1,59 @@
 Library, Current Item Policy, Loan Length, Set Name, Result
-SMFA Library,AC Adaptor,4 Hours,AC Adaptor - SMFA Library - to 4 Hours and Item Material Type Equipment,{"errorsExist":true,"errorList":{"error":[{"errorCode":"402263","errorMessage":"The set name already exists. Please choose a different name.","trackingId":"E01-2805181530-1BMHD-AWAE1623632841"}]}}
-Music Library,Apple Charger,4 Hours,Apple Charger - Music Library - to 4 Hours and Item Material Type Equipment,{"errorsExist":true,"errorList":{"error":[{"errorCode":"402263","errorMessage":"The set name already exists. Please choose a different name.","trackingId":"E01-2805181531-XZLXV-AWAE1623632841"}]}}
-SMFA Library,Apple Charger,4 Hours,Apple Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,{"errorsExist":true,"errorList":{"error":[{"errorCode":"402263","errorMessage":"The set name already exists. Please choose a different name.","trackingId":"E01-2805181532-P6HMP-AWAE1623632841"}]}}
-Hirsh Library,Apple Charger,4 Hours,Apple Charger - Hirsh Library - to 4 Hours and Item Material Type Equipment,{"errorsExist":true,"errorList":{"error":[{"errorCode":"402263","errorMessage":"The set name already exists. Please choose a different name.","trackingId":"E01-2805181532-3NJ36-AWAE1623632841"}]}}
-Music Library,AV Cable,4 Hours,AV Cable - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151456690003851-400
-SMFA Library,AV Cable,4 Hours,AV Cable - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151456710003851-400
-Hirsh Library,AV Cable,4 Hours,AV Cable - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151456730003851-400
-Hirsh Library,Calculator,4 Hours,Calculator - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151456750003851-400
-Music Library,External Drive,4 Hours,External Drive - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151456770003851-400
-SMFA Library,External Drive,4 Hours,External Drive - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151456790003851-400
-Hirsh Library,External Drive,4 Hours,External Drive - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151456810003851-400
-Music Library,Headphones,4 Hours,Headphones - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151456830003851-400
-SMFA Library,Headphones,4 Hours,Headphones - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151456850003851-400
-Hirsh Library,Headphones,4 Hours,Headphones - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151456870003851-400
-Music Library,Laptop,4 Hours,Laptop - Music Library - to 4 Hours and Item Material Type Laptop,error check set 25151456890003851-400
-SMFA Library,Laptop,4 Hours,Laptop - SMFA Library - to 4 Hours and Item Material Type Laptop,error check set 25151456970003851-400
-Hirsh Library,Laptop,4 Hours,Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,error check set 25151457080003851-400
-Hirsh Library,Laptop Accessories,4 Hours,Laptop Accessories - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151457190003851-400
-SMFA Library,Laptop Accessories,4 Hours,Laptop Accessories - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151457300003851-400
-Hirsh Library,Mac Accessory,4 Hours,Mac Accessory - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151457500003851-400
-SMFA Library,Mac Accessory,4 Hours,Mac Accessory - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151457580003851-400
-Hirsh Library,Mac Av Adaptor,4 Hours,Mac Av Adaptor - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151457600003851-400
-SMFA Library,Mac Av Adaptor,4 Hours,Mac Av Adaptor - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151457620003851-400
-Hirsh Library,Mac Laptop,4 Hours,Mac Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,error check set 25151457640003851-400
-Hirsh Library,Mobile Device Charger,4 Hours,Mobile Device Charger - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151457660003851-400
-SMFA Library,Mobile Device Charger,4 Hours,Mobile Device Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151457710003851-400
-Hirsh Library,Mouse,4 Hours,Mouse - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151457820003851-400
-SMFA Library,PC Accessory,4 Hours,PC Accessory - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151457930003851-400
-Hirsh Library,PC Laptop,4 Hours,PC Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,error check set 25151458040003851-400
-Hirsh Library,Power Remote,4 Hours,Power Remote - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151458150003851-400
-SMFA Library,Universal Charger,4 Hours,Universal Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151458350003851-400
-Ginn Library,AC Adaptor,Midnight/Closing,AC Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458370003851-400
-Ginn Library,AV Cable,Midnight/Closing,AV Cable - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458390003851-400
-Ginn Library,Calculator,Midnight/Closing,Calculator - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458410003851-400
-Ginn Library,Digital Camera,Midnight/Closing,Digital Camera - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458430003851-400
-Ginn Library,External Drive,Midnight/Closing,External Drive - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458450003851-400
-Ginn Library,Headphones,Midnight/Closing,Headphones - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458470003851-400
-Ginn Library,Mac Av Adaptor,Midnight/Closing,Mac Av Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458490003851-400
-Ginn Library,Microphone,Midnight/Closing,Microphone - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458510003851-400
-Ginn Library,Mobile Device Charger,Midnight/Closing,Mobile Device Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458530003851-400
-Ginn Library,Mouse,Midnight/Closing,Mouse - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458550003851-400
-Ginn Library,Power Remote,Midnight/Closing,Power Remote - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458570003851-400
-Ginn Library,Projector,Midnight/Closing,Projector - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458590003851-400
-Ginn Library,Projector Screen,Midnight/Closing,Projector Screen - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458610003851-400
-Ginn Library,Tripod,Midnight/Closing,Tripod - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458630003851-400
-Tisch Library,AV Cable,8 Hours,AV Cable - Tisch Library - to 8 Hours and Item Material Type Equipment,error check set 25151458650003851-400
-Ginn Library,Apple Charger,Midnight/Closing,Apple Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458670003851-400
-Ginn Library,Laptop,Midnight/Closing,Laptop - Ginn Library - to Midnight/Closing and Item Material Type Laptop,error check set 25151458690003851-400
-Ginn Library,Universal Charger,Midnight/Closing,Universal Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151458710003851-400
-Tisch Library,Headphones,24 Hours,Headphones - Tisch Library - to 24 Hours and Item Material Type Equipment,error check set 25151458730003851-400
-Tisch Library,Mac Av Adaptor,24 Hours,Mac Av Adaptor - Tisch Library - to 24 Hours and Item Material Type Equipment,error check set 25151458750003851-400
-Music Library,AV Equipment,3 days,AV Equipment - Music Library - to 3 days and Item Material Type Equipment,error check set 25151458770003851-400
-SMFA Library,AV Equipment,3 days,AV Equipment - SMFA Library - to 3 days and Item Material Type Equipment,error check set 25151458790003851-400
-Tisch Library,Calculator,4 days,Calculator - Tisch Library - to 4 days and Item Material Type Equipment,error check set 25151458810003851-400
-Tisch Library,External Drive,4 days,External Drive - Tisch Library - to 4 days and Item Material Type Equipment,error check set 25151458830003851-400
-Tisch Library,Mac Laptop,4 days,Mac Laptop - Tisch Library - to 4 days and Item Material Type Laptop,error check set 25151458850003851-400
-Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,error check set 25151458870003851-400
-Vet Library,Laptop,7 days,Laptop - Vet Library - to 7 days and Item Material Type Equipment,error check set 25151458890003851-400
+SMFA Library,AC Adaptor,4 Hours,AC Adaptor - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151458980003851-400
+Music Library,Apple Charger,4 Hours,Apple Charger - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151459000003851-400
+SMFA Library,Apple Charger,4 Hours,Apple Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459020003851-400
+Hirsh Library,Apple Charger,4 Hours,Apple Charger - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459040003851-400
+Music Library,AV Cable,4 Hours,AV Cable - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151459060003851-400
+SMFA Library,AV Cable,4 Hours,AV Cable - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459080003851-400
+Hirsh Library,AV Cable,4 Hours,AV Cable - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459100003851-400
+Hirsh Library,Calculator,4 Hours,Calculator - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459120003851-400
+Music Library,External Drive,4 Hours,External Drive - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151459140003851-400
+SMFA Library,External Drive,4 Hours,External Drive - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459160003851-400
+Hirsh Library,External Drive,4 Hours,External Drive - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459180003851-400
+Music Library,Headphones,4 Hours,Headphones - Music Library - to 4 Hours and Item Material Type Equipment,error check set 25151459200003851-400
+SMFA Library,Headphones,4 Hours,Headphones - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459220003851-400
+Hirsh Library,Headphones,4 Hours,Headphones - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459240003851-400
+Music Library,Laptop,4 Hours,Laptop - Music Library - to 4 Hours and Item Material Type Laptop,error check set 25151459260003851-400
+SMFA Library,Laptop,4 Hours,Laptop - SMFA Library - to 4 Hours and Item Material Type Laptop,error check set 25151459280003851-400
+Hirsh Library,Laptop,4 Hours,Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,error check set 25151459300003851-400
+Hirsh Library,Laptop Accessories,4 Hours,Laptop Accessories - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459320003851-400
+SMFA Library,Laptop Accessories,4 Hours,Laptop Accessories - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459340003851-400
+Hirsh Library,Mac Accessory,4 Hours,Mac Accessory - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459360003851-400
+SMFA Library,Mac Accessory,4 Hours,Mac Accessory - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459380003851-400
+Hirsh Library,Mac Av Adaptor,4 Hours,Mac Av Adaptor - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459400003851-400
+SMFA Library,Mac Av Adaptor,4 Hours,Mac Av Adaptor - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459420003851-400
+Hirsh Library,Mac Laptop,4 Hours,Mac Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,error check set 25151459440003851-400
+Hirsh Library,Mobile Device Charger,4 Hours,Mobile Device Charger - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459460003851-400
+SMFA Library,Mobile Device Charger,4 Hours,Mobile Device Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459480003851-400
+Hirsh Library,Mouse,4 Hours,Mouse - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459500003851-400
+SMFA Library,PC Accessory,4 Hours,PC Accessory - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459520003851-400
+Hirsh Library,PC Laptop,4 Hours,PC Laptop - Hirsh Library - to 4 Hours and Item Material Type Laptop,error check set 25151459540003851-400
+Hirsh Library,Power Remote,4 Hours,Power Remote - Hirsh Library - to 4 Hours and Item Material Type Equipment,error check set 25151459560003851-400
+SMFA Library,Universal Charger,4 Hours,Universal Charger - SMFA Library - to 4 Hours and Item Material Type Equipment,error check set 25151459580003851-400
+Ginn Library,AC Adaptor,Midnight/Closing,AC Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459600003851-400
+Ginn Library,AV Cable,Midnight/Closing,AV Cable - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459620003851-400
+Ginn Library,Calculator,Midnight/Closing,Calculator - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459640003851-400
+Ginn Library,Digital Camera,Midnight/Closing,Digital Camera - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459660003851-400
+Ginn Library,External Drive,Midnight/Closing,External Drive - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459680003851-400
+Ginn Library,Headphones,Midnight/Closing,Headphones - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459700003851-400
+Ginn Library,Mac Av Adaptor,Midnight/Closing,Mac Av Adaptor - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459720003851-400
+Ginn Library,Microphone,Midnight/Closing,Microphone - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459740003851-400
+Ginn Library,Mobile Device Charger,Midnight/Closing,Mobile Device Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459760003851-400
+Ginn Library,Mouse,Midnight/Closing,Mouse - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459780003851-400
+Ginn Library,Power Remote,Midnight/Closing,Power Remote - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459800003851-400
+Ginn Library,Projector,Midnight/Closing,Projector - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459820003851-400
+Ginn Library,Projector Screen,Midnight/Closing,Projector Screen - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459840003851-400
+Ginn Library,Tripod,Midnight/Closing,Tripod - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459860003851-400
+Tisch Library,AV Cable,8 Hours,AV Cable - Tisch Library - to 8 Hours and Item Material Type Equipment,error check set 25151459880003851-400
+Ginn Library,Apple Charger,Midnight/Closing,Apple Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459900003851-400
+Ginn Library,Laptop,Midnight/Closing,Laptop - Ginn Library - to Midnight/Closing and Item Material Type Laptop,error check set 25151459920003851-400
+Ginn Library,Universal Charger,Midnight/Closing,Universal Charger - Ginn Library - to Midnight/Closing and Item Material Type Equipment,error check set 25151459940003851-400
+Tisch Library,Headphones,24 Hours,Headphones - Tisch Library - to 24 Hours and Item Material Type Equipment,error check set 25151459960003851-400
+Tisch Library,Mac Av Adaptor,24 Hours,Mac Av Adaptor - Tisch Library - to 24 Hours and Item Material Type Equipment,error check set 25151459980003851-400
+Music Library,AV Equipment,3 days,AV Equipment - Music Library - to 3 days and Item Material Type Equipment,error check set 25151460000003851-400
+SMFA Library,AV Equipment,3 days,AV Equipment - SMFA Library - to 3 days and Item Material Type Equipment,error check set 25151460020003851-400
+Tisch Library,Calculator,4 days,Calculator - Tisch Library - to 4 days and Item Material Type Equipment,error check set 25151460040003851-400
+Tisch Library,External Drive,4 days,External Drive - Tisch Library - to 4 days and Item Material Type Equipment,error check set 25151460060003851-400
+Tisch Library,Mac Laptop,4 days,Mac Laptop - Tisch Library - to 4 days and Item Material Type Laptop,error check set 25151460080003851-400
+Tisch Library,Mouse,4 days,Mouse - Tisch Library - to 4 days and Item Material Type Equipment,error check set 25151460100003851-400
+Vet Library,Laptop,7 days,Laptop - Vet Library - to 7 days and Item Material Type Equipment,error check set 25151460120003851-400

@@ -2,18 +2,7 @@
 import os
 import pandas as pd
 import re
-from flask import Blueprint, request, redirect, url_for, send_file, current_app, render_template
-from werkzeug.utils import secure_filename
-import io
-from io import BytesIO
-import zipfile
-import dotenv
-import os
-from dotenv import load_dotenv
-import json
-import requests
 import time
-import pymarc as pym
 import sys
 import json
 sys.path.append(os.path.relpath('config/'))
@@ -57,11 +46,11 @@ from functions import *
 
 FORMATTED_OUTPUT_FILE = 'Potential Issues with Item Policy Application to Loan - Gap Analysis.xlsx'
 OUTPUT_DIR = 'Output'
-inputFilenameBulkTestingFormatted = askopenfilename(title="Select Excel file Bulk_Checkout_Request_Results - Formatted.xlsx")
-inputFilenameAnalytics = askopenfilename(title="Select Excel file containing loan rules containing extant Item Policy/Location combinations")
-inputFilenameMapping = askopenfilename(title="Select Excel file containing mapping of old item policy to new item policy")
-
-
+#inputFilenameBulkTestingFormatted = askopenfilename(title="Select Excel file Bulk_Checkout_Request_Results - Formatted.xlsx")
+#inputFilenameAnalytics = askopenfilename(title="Select Excel file containing loan rules containing extant Item Policy/Location combinations")
+#inputFilenameMapping = askopenfilename(title="Select Excel file containing mapping of old item policy to new item policy")
+inputFilenameBulkTestingFormatted = "Bulk_Checkout_Request_Results - Formatted.xlsx"
+inputFilenameMapping = "input/Item Policy Change/approved/Item_Policy_Loan_Mapping.xlsx"
 wb = load_workbook(inputFilenameBulkTestingFormatted, data_only=True)
 ws = wb['Sheet1']
 
@@ -77,7 +66,7 @@ df_tester = pd.DataFrame(data_rows, columns=header)
 
 df_tester = pd.DataFrame(visible_rows[1:], columns=visible_rows[0])
 
-df_analytics = pd.read_excel(inputFilenameAnalytics, engine="openpyxl", dtype='str')
+#df_analytics = pd.read_excel(inputFilenameAnalytics, engine="openpyxl", dtype='str')
 df_mapping = pd.read_excel(inputFilenameMapping, engine="openpyxl", dtype='str')
 
 df_tester = df_tester.sort_values(by=[])
@@ -97,9 +86,9 @@ for index, row in df_mapping.iterrows():
     mapping_dict[row['Library Name'] + "-" + row['Current Item Policy']] = row['New item policy/Loan Length']
 
 prefixes = ("Ginn", "HHSL", "Hirsh", "Music", "SMFA", "Vet")
-df_tester['Location'] = df_tester['Location'].apply(
-    lambda x: x if any(x.strip().startswith(p) for p in prefixes) else "Tisch " + x
-)
+#df_tester['Location'] = df_tester['Location'].apply(
+    #lambda x: x if any(x.strip().startswith(p) for p in prefixes) else "Tisch " + x
+#)
 
 # print(json.dumps(mapping_dict))
 
@@ -108,9 +97,9 @@ df_tester['Library'] = df_tester['Library'].apply(lambda x: re.sub(r"^([\S]+)\s?
 df_tester['Library Name-Item Policy'] = df_tester['Library'] + "-" + df_tester['Item Policy']
 
 
-df_analytics['Library'] = df_analytics['Location Name'].apply(lambda x: x.replace("Reserves", "Library"))
-df_analytics['Library'] = df_analytics['Library'].apply(lambda x: re.sub(r"^([\S]+)(Library)?.+$", r"\1", x))
-df_analytics['Library Name-Item Policy'] = df_analytics['Library'] + "-" + df_analytics['Item Policy']
+#df_analytics['Library'] = df_analytics['Location Name'].apply(lambda x: x.replace("Reserves", "Library"))
+#df_analytics['Library'] = df_analytics['Library'].apply(lambda x: re.sub(r"^([\S]+)(Library)?.+$", r"\1", x))
+#df_analytics['Library Name-Item Policy'] = df_analytics['Library'] + "-" + df_analytics['Item Policy']
 
 missing_keys_list = []
 
@@ -161,28 +150,28 @@ check_df = pd.DataFrame(columns=df_tester.columns)
 for library in unique_library_list:
     for item_policy in unique_item_policy_list:
         
-        if library + "-" + item_policy not in df_tester['Library Name-Item Policy'].values or library + "-" + item_policy not in df_analytics['Library Name-Item Policy'].values:
+        #if library + "-" + item_policy not in df_tester['Library Name-Item Policy'].values or library + "-" + item_policy not in df_analytics['Library Name-Item Policy'].values:
             #print("Non-extant library/item policy combination: " + library + "-" + item_policy)
             non_extant_library_item_policy_combinations.append(library + "-" + item_policy)
-            continue
+            #continue
         
         
-        for user_group in unique_user_group_list:
+    for user_group in unique_user_group_list:
     
-            df_tester_group = df_tester.copy()
-            df_tester_group = df_tester[(df_tester['Library'] == library) & (df_tester['Item Policy'] == item_policy) & (df_tester['User Group'] == user_group)]
+        df_tester_group = df_tester.copy()
+        df_tester_group = df_tester[(df_tester['Library'] == library) & (df_tester['New Item Policy'] == item_policy) & (df_tester['User Group'] == user_group)]
             
             # df_tester_group = df_tester_group.reset_index()
             # for location in df_tester_group['Location'].unique():
             # # pd.options.display.max_rows = None
             #     tester_location_subgroup_df = df_tester_group.copy()
 
-            tester_location_subgroup_df = tester_location_subgroup_df[tester_location_subgroup_df['Location'] == location]
+        tester_location_subgroup_df = tester_location_subgroup_df[tester_location_subgroup_df['Location'] == location]
             # pd.options.display.max_columns = None
             # print(df_tester_group)
-            if len(tester_location_subgroup_df) > 1 and len(tester_location_subgroup_df['Fulfillment Rule (Loan)'].unique()) > 1:  
+        if len(tester_location_subgroup_df) > 1 and len(tester_location_subgroup_df['Fulfillment Rule (Loan)'].unique()) > 1:  
                             
-                check_df = pd.concat([check_df, tester_location_subgroup_df])
+            check_df = pd.concat([check_df, tester_location_subgroup_df])
 
 
 check_df.to_excel('Potential Issues with Item Policy Application to Loan - Gap Analysis.xlsx', index=False)

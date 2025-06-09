@@ -387,5 +387,6 @@ def highlight_unique_values(file_path, output_path):
             cell.fill = fill
 
     # Save the updated workbook
-    workbook.save(output_path)
-    print(f"File saved with highlighted column H: {output_path}")
+
+    workbook.save(file_path)
+    print(f"File saves: {file_path}")
