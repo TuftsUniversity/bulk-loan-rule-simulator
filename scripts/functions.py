@@ -328,12 +328,10 @@ def write_buffer_to_excel(buffer, thread_id, output_dir):
         print(f"❌ Error in write_buffer_to_excel for Thread-{thread_id}: {e}")
 
 
-def merge_excel_files(num_threads, OUTPUT_DIR, OUTPUT_FILE):
-    """Merge Excel files from all threads into a single file."""
+def merge_excel_files(num_threads, output_dir):
     all_data = []
-    
     for i in range(num_threads):
-        file_path = f"{OUTPUT_DIR}/output_thread_{i}.xlsx"
+        file_path = os.path.join(output_dir, f"output_thread_{i}.xlsx")
         if os.path.exists(file_path):
             print(f"✅ Including: {file_path}")
             df = pd.read_excel(file_path, engine="openpyxl")
@@ -343,16 +341,24 @@ def merge_excel_files(num_threads, OUTPUT_DIR, OUTPUT_FILE):
 
     if all_data:
         final_df = pd.concat(all_data, ignore_index=True)
-        
-        # Remove old file to ensure it's not partially overwritten
-        if os.path.exists(OUTPUT_FILE):
-            os.remove(OUTPUT_FILE)
-        
-        final_df.to_excel(OUTPUT_FILE, index=False)
-        print(f"📁 Merged {len(all_data)} files. Final output: {OUTPUT_FILE} ({os.path.getsize(OUTPUT_FILE)/1024:.2f} KB)")
+        print(f"📁 Merged {len(all_data)} files. Total rows: {len(final_df)}")
+        return final_df
     else:
         print("❌ No files to merge.")
+        return pd.DataFrame()
 
+def retrieve_current_row_index(output_dir):
+    if not os.path.isdir(output_dir) or not os.listdir(output_dir):
+        return 0, 0
+
+    output_files = [f for f in os.listdir(output_dir) if f.startswith("output_thread_") and f.endswith(".xlsx")]
+    num_existing_threads = len(output_files)
+
+    combined_df = merge_excel_files(num_existing_threads, output_dir)
+    if not combined_df.empty:
+        return len(combined_df), num_existing_threads
+    else:
+        return 0, num_existing_threads
 def highlight_unique_values(file_path, output_path):
     # Load the spreadsheet into a pandas DataFrame
     df = pd.read_excel(file_path, engine='openpyxl')

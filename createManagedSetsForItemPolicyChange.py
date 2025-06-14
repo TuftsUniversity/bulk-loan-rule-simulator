@@ -157,6 +157,11 @@ for index, row in df.iterrows():
         log_file.write(library + "," + item_policy + "," + loan_length + "," + name + "," + str(result_post.text) + "\n")
 
 
+
+YELLOW = '\033[33m'
+RESET = '\033[0m'
+print(f"{YELLOW}Successully completed, but go into the managed sets and separate Tisch mac laptops between 4 hour and 4 day depending on whether they're in the short term loan location{RESET}")
+
 log_file.close()
 
 

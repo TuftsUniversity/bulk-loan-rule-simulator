@@ -32,7 +32,7 @@ OUTPUT_FILE = "Bulk_Checkout_Request_Results.xlsx"
 FORMATTED_OUTPUT_FILE = "Bulk_Checkout_Request_Results - Highlighted.xlsx"
 OUTPUT_DIR = "Output"
 BUFFER_WRITE_INTERVAL = 10
-
+global row_index
 YELLOW = '\033[33m'
 RESET = '\033[0m'
 n = input(f"{YELLOW}Please close all Chrome browsers and processes before continuing, since this program uses multithreading to expedite the process of retrieving loan rules.\n\nPress any key to continue, once you have closed Chrome.\n\nThis program also uses multithreading to increase speed since drilling through fulfillment configuration windows takes a while.  But the number of threads that is best matched to your local environment is based on how reliable and fast your internet is.  Please choose one of the options below:\n\n\t1 (1 thread: Slow internet)\n\t2 (2 threads: Faster internet)\n\t3 (3 threads: Fastest internet)\n\n\tChoice: {RESET}")
@@ -70,7 +70,7 @@ def init_driver():
     return driver
 
 def worker_thread(thread_id, combined_df):
-    global row_index
+
     driver = init_driver()
     buffer = []
     current_user_id = None
@@ -97,9 +97,12 @@ def worker_thread(thread_id, combined_df):
     navigate_to_checkout()
 
     while True:
+
+        global row_index
         with row_index_lock:
             if row_index >= len(combined_df):
                 break
+            
             row = combined_df.iloc[row_index]
             row_index += 1
 
@@ -211,20 +214,32 @@ def cross_join(df1, df2):
     return pd.merge(df1, df2, on="key").drop("key", axis=1)
 
 def main():
+    global row_index
     combined_df = cross_join(user_group_data, item_policy_data)
     combined_df = combined_df.sort_values(by=["Primary Identifier", "Location Name", "Item Policy"])
 
+    if os.path.exists(OUTPUT_DIR) and os.listdir(OUTPUT_DIR):
+        
+        row_index, start_thread_id = retrieve_current_row_index(OUTPUT_DIR)
+        print("previous analysis in progress.  start at row " + str(row_index) + " in the combined item policy/user group/location sheet\n")
+    else:
+        start_thread_id = 0
+
     threads = []
     for i in range(N):
-        t = threading.Thread(target=worker_thread, args=(i, combined_df))
+        thread_id = start_thread_id + i
+        print("thread id" + str(thread_id) + "\n")
+        t = threading.Thread(target=worker_thread, args=(thread_id, combined_df))
         t.start()
         threads.append(t)
 
     for t in threads:
         t.join()
-    merge_excel_files(N, OUTPUT_DIR, OUTPUT_FILE)
 
-    highlight_unique_values(FORMATTED_OUTPUT_FILE, OUTPUT_DIR)
+    final_df = merge_excel_files(start_thread_id + N, OUTPUT_DIR)
+    final_df.to_excel(OUTPUT_FILE, index=False)
+
+    highlight_unique_values(FORMATTED_OUTPUT_FILE, OUTPUT_FILE)
     print("All threads complete.")
 
 if __name__ == "__main__":
